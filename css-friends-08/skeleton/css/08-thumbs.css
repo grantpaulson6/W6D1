@@ -1,0 +1,16 @@
+/* PHASE 8: Thumbs */
+.thumb > li {
+    height: 40px;
+    width: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.thumb {
+    display: flex;
+    flex-wrap: wrap;
+    height: 200px;
+    width: 200px;
+    
+    justify-content: space-between;
+}
