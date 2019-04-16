@@ -16,13 +16,14 @@ function sum2(...args) {
 }
 
 Function.prototype.myBind = function(context, ...bargs) {
-  return (...cargs) => {
-    return this.apply(context, bargs.concat(cargs))
+  let that = this;
+  return function (...cargs) {
+    return that.apply(context, bargs.concat(cargs));
   } 
 }
 
 function curriedSum(num) {
-  let total = num;
+  const total = num;
   let count = 0;
   let sum = 0;
 
@@ -39,18 +40,20 @@ function curriedSum(num) {
 
 
 Function.prototype.curry = function (numArgs) {
-  let args = [];
-  let total = numArgs;
-  let that = this;
-  return function _curry(num) {
+  const args = [];
+
+  return _curry = (num) => {
     args.push(num);
-    if (args.length === total) {
-      return that.apply(that, args)
+    if (args.length === numArgs) {
+      return this(...args)
     } else {
       return _curry;
     }
   }
 }
+let s = sum2.curry(2)
+
+console.log(s(1)(2))
 
 
 Function.prototype.currySpread = function (numArgs) {
@@ -60,7 +63,7 @@ Function.prototype.currySpread = function (numArgs) {
   return function _curry(...nums) {
     nums.forEach(num => args.push(num));
     if (args.length >= total) {
-      return that.apply(that, args)
+      return that(args)
     } else {
       return _curry;
     }
@@ -69,7 +72,7 @@ Function.prototype.currySpread = function (numArgs) {
 
 s = sum.currySpread(2)
 
-console.log(s(1, 2))
+// console.log(s(1, 2))
 
 // let sum3 = curriedSum(4);
 
